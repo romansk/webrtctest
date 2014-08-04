@@ -6,6 +6,8 @@ fail() {
 }
 
 set_environment() {
+    echo $JAVA_HOME
+    echo `java -version`
     export GYP_DEFINES="build_with_libjingle=1 build_with_chromium=0 libjingle_objc=0"
     export GYP_GENERATORS="ninja"
     export GYP_CROSSCOMPILE=1
@@ -15,12 +17,14 @@ set_environment_for_arm() {
     set_environment
     export GYP_DEFINES="$GYP_DEFINES OS=android"
     export GYP_GENERATOR_FLAGS="$GYP_GENERATOR_FLAGS output_dir=out_arm"
+    export STRIP="$ANDROID_NDK/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/arm-linux-androideabi/bin/strip"
 }
 
 set_environment_for_x86() {
    set_environment
    export GYP_DEFINES="$GYP_DEFINES OS=android target_arch=ia32"
    export GYP_GENERATOR_FLAGS="$GYP_GENERATOR_FLAGS output_dir=out_x86"
+   export STRIP="$ANDROID_NDK/toolchains/x86-4.6/prebuilt/linux-x86_64/bin/i686-linux-android-strip"
 }
 
 build() {
@@ -31,7 +35,7 @@ build() {
     gclient runhooks --force || fail
     ninja -C out_$1/Debug libjingle_peerconnection_so libjingle_peerconnection.jar || fail
 	ninja -C out_$1/Release libjingle_peerconnection_so libjingle_peerconnection.jar || fail
-    ../$1_strip -s out_$1/Release/libjingle_peerconnection_so.so
+    $STRIP -s out_$1/Release/libjingle_peerconnection_so.so
     pushd out_$1/Release || fail
     popd
     popd
@@ -53,7 +57,7 @@ prerequisites() {
 }
 
 pushtogit() {
-    REVISION = `grep -Po '(?<=@)[^\"]+' .gclient`
+    REVISION=`grep -Po '(?<=@)[^\"]+' .gclient`
     git init
     git remote add origin https://github.com/unisontech/webrtc-repo
     git add repo/*    
