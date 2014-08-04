@@ -54,6 +54,8 @@ prerequisites() {
 
 pushtogit() {
     REVISION = `grep -Po '(?<=@)[^\"]+' .gclient`
+    git init
+    git remote add origin https://github.com/unisontech/webrtc-repo
     git add repo/*    
     git commit -m 'webrtc revision: $REVISION'
     git push origin master
