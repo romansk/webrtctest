@@ -52,10 +52,21 @@ prerequisites() {
     popd
 }
 
+pushtogit() {
+    REVISION = `grep -Po '(?<=@)[^\"]+' .gclient`
+    git add repo/*    
+    git commit -m 'webrtc revision: $REVISION'
+    git push origin master
+}
+
 prerequisites
 
 build arm
 build x86
+
+make
+
+pushtogit
 
 
 
