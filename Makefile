@@ -1,5 +1,5 @@
 REVISION:=`grep -Po '(?<=@)[^\"]+' .gclient`
-POM_PATH:=mavenrepo/webrtc_pom/
+POM_PATH:=mavenrepo/webrtc/
 
 .PHONY: all clean
 
