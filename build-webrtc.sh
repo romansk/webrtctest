@@ -54,6 +54,7 @@ prerequisites() {
     source ./build/android/envsetup.sh
     popd
     rm -rf mavenrepo
+    rm -rf repo
 }
 
 pushToGit() {
