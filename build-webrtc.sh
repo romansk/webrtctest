@@ -31,6 +31,7 @@ build() {
     gclient runhooks --force || fail
     ninja -C out_$1/Debug libjingle_peerconnection_so libjingle_peerconnection.jar || fail
 	ninja -C out_$1/Release libjingle_peerconnection_so libjingle_peerconnection.jar || fail
+    strip out_$1/Release/libjingle_peerconnection_so.so
     pushd out_$1/Release || fail
     popd
     popd
@@ -55,4 +56,6 @@ prerequisites
 
 build arm
 build x86
+
+
 
