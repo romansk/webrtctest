@@ -6,8 +6,7 @@ fail() {
 }
 
 set_environment() {
-    echo $JAVA_HOME
-    echo `java -version`
+    export JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'
     export GYP_DEFINES="build_with_libjingle=1 build_with_chromium=0 libjingle_objc=0"
     export GYP_GENERATORS="ninja"
     export GYP_CROSSCOMPILE=1
