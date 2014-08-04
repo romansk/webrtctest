@@ -55,6 +55,7 @@ prerequisites() {
     popd
     rm -rf mavenrepo
     rm -rf repo
+    rm -rf webrtc_pom
 }
 
 pushToGit() {
