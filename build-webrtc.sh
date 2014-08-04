@@ -16,14 +16,14 @@ set_environment_for_arm() {
     set_environment
     export GYP_DEFINES="$GYP_DEFINES OS=android"
     export GYP_GENERATOR_FLAGS="$GYP_GENERATOR_FLAGS output_dir=out_arm"
-    export STRIP="$ANDROID_NDK/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/arm-linux-androideabi/bin/strip"
+    export STRIP="$ANDROID_NDK/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86/arm-linux-androideabi/bin/strip"
 }
 
 set_environment_for_x86() {
    set_environment
    export GYP_DEFINES="$GYP_DEFINES OS=android target_arch=ia32"
    export GYP_GENERATOR_FLAGS="$GYP_GENERATOR_FLAGS output_dir=out_x86"
-   export STRIP="$ANDROID_NDK/toolchains/x86-4.6/prebuilt/linux-x86_64/bin/i686-linux-android-strip"
+   export STRIP="$ANDROID_NDK/toolchains/x86-4.6/prebuilt/linux-x86/bin/i686-linux-android-strip"
 }
 
 build() {
@@ -42,7 +42,6 @@ build() {
 }
 
 prerequisites() {
-    locate strip | grep ndk
     export PATH=`pwd`/depot_tools:"$PATH"
     which gclient >/dev/null
     if [ $? -ne 0 ]; 
