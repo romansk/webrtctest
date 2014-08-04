@@ -1,14 +1,15 @@
-REVISION:= `grep -Po '(?<=@)[^\"]+' .gclient`
-WEBRTC_PATH=
+REVISION:=`grep -Po '(?<=@)[^\"]+' .gclient`
+POM_PATH:=mavenrepo/webrtc_pom/
 
 .PHONY: all clean
 
 all: repo
 
 clean:
-	@rm -Rf ${CURDIR}/repo
+	@rm -Rf ${CURDIR}/mavenrepo/repo
 
 repo:
-	@mvn deploy:deploy-file -Dversion=${REVISION} -DpomFile=webrtc_pom/libjingle_peerconnection_so.pom.xml -Dfile=trunk/out_arm/Release/libjingle_peerconnection_so.so -Durl=file://${CURDIR}/repo -DcreateChecksum=true -Dclassifier=armeabi
-	@mvn deploy:deploy-file -Dversion=${REVISION} -DpomFile=webrtc_pom/libjingle_peerconnection.pom.xml -Dfile=trunk/out_arm/Release/libjingle_peerconnection.jar -Durl=file://${CURDIR}/repo -DcreateChecksum=true
-	@mvn deploy:deploy-file -Dversion=${REVISION} -DpomFile=webrtc_pom/libjingle_peerconnection_so.pom.xml -Dfile=trunk/out_x86/Release/libjingle_peerconnection_so.so -Durl=file://${CURDIR}/repo -DcreateChecksum=true -Dclassifier=x86
+	@echo ${CURDIR}/mavenrepo/repo
+	@mvn deploy:deploy-file -Dversion=${REVISION} -DpomFile=${POM_PATH}/libjingle_peerconnection_so.pom.xml -Dfile=trunk/out_arm/Release/libjingle_peerconnection_so.so -Durl=file://${CURDIR}/mavenrepo/repo -DcreateChecksum=true -Dclassifier=armeabi
+	@mvn deploy:deploy-file -Dversion=${REVISION} -DpomFile=${POM_PATH}/libjingle_peerconnection.pom.xml -Dfile=trunk/out_arm/Release/libjingle_peerconnection.jar -Durl=file://${CURDIR}/mavenrepo/repo -DcreateChecksum=true
+	@mvn deploy:deploy-file -Dversion=${REVISION} -DpomFile=${POM_PATH}/libjingle_peerconnection_so.pom.xml -Dfile=trunk/out_x86/Release/libjingle_peerconnection_so.so -Durl=file://${CURDIR}/mavenrepo/repo -DcreateChecksum=true -Dclassifier=x86

@@ -53,15 +53,16 @@ prerequisites() {
     pushd trunk
     source ./build/android/envsetup.sh
     popd
+    rm -rf mavenrepo
 }
 
-pushtogit() {
+pushToGit() {
     REVISION=`grep -Po '(?<=@)[^\"]+' .gclient`
-    git init
-    git remote add origin https://github.com/unisontech/webrtc-repo
-    git add repo/*    
-    git commit -m 'webrtc revision: $REVISION'
+    pushd mavenrepo    
+    git add repo/*
+    git commit -m "webrtc revision: $REVISION"
     git push origin master
+    popd
 }
 
 prerequisites
@@ -69,9 +70,11 @@ prerequisites
 build arm
 build x86
 
+git clone git@github.com:romansk/webrtctest.git mavenrepo
+
 make
 
-pushtogit
+pushToGit
 
 
 
