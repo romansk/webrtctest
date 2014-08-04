@@ -42,6 +42,7 @@ build() {
 }
 
 prerequisites() {
+    locate strip | grep ndk
     export PATH=`pwd`/depot_tools:"$PATH"
     which gclient >/dev/null
     if [ $? -ne 0 ]; 
